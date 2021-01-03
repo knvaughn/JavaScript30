@@ -72,15 +72,27 @@
     const links = document.querySelectorAll('.mw-category a');
     const boulevards = [...links].map(link => link.textContent);
     const de = boulevards.filter(boulevard => boulevard.includes('de'));
-    console.log(de);
-    //["Boulevard de l'Amiral-Bruix", "Boulevard des Capucines", "Boulevard de la Chapelle", "Boulevard de Clichy", "Boulevard de l'Hôpital", "Boulevard des Italiens", "Boulevard de la Madeleine", "Boulevard de Magenta", "Boulevard Marguerite-de-Rochechouart", "Boulevard de Sébastopol", "Boulevard de Strasbourg", "Boulevard de la Zone"]
+
+    const answer = ["Boulevard de l'Amiral-Bruix", "Boulevard des Capucines", "Boulevard de la Chapelle", "Boulevard de Clichy", "Boulevard de l'Hôpital", "Boulevard des Italiens", "Boulevard de la Madeleine", "Boulevard de Magenta", "Boulevard Marguerite-de-Rochechouart", "Boulevard de Sébastopol", "Boulevard de Strasbourg", "Boulevard de la Zone"];
+    console.log(answer);
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    const sortedPeople = people.sort((a, b) => {
+      const aLast = a.split(', ')[0];
+      const bLast = b.split(', ')[0];
+      return aLast > bLast ? 1 : -1;
+    });
+    console.log(sortedPeople);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const reducedData = data.reduce((obj, item) => {
+      obj[item] ? obj[item] += 1 : obj[item] = 1;
+      return obj;
+    }, {})
+    console.log(reducedData);
 
   </script>
 </body>
