@@ -16,7 +16,37 @@
   </form>
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
-
+const cities = [];
+fetch(endpoint)
+  .then(response => response.json())
+  .then(data => cities.push(...data));
+//console.log(cities);
+function filterLocations(str, arr) {
+  const regex = new RegExp(str, 'gi');
+  return arr.filter(obj => obj.city.match(regex) || obj.state.match(regex));
+}
+function numberWithCommas(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+function showLocations() {
+  const results = filterLocations(this.value, cities);
+  const html = results.map((obj) => {
+    const regex = new RegExp(this.value, 'gi');
+    const cityName = obj.city.replace(regex, `<span class="hl">${this.value}</span>`);
+    const stateName = obj.state.replace(regex, `<span class="hl">${this.value}</span>`);
+    return `
+      <li>
+        <span class="name">${cityName}, ${stateName}</span>
+        <span class="population">${numberWithCommas(obj.population)}</span>
+      </li>
+    `;
+  }).join("");
+  suggestions.innerHTML = html;
+}
+const searchInput = document.querySelector('.search');
+const suggestions = document.querySelector('.suggestions');
+searchInput.addEventListener('change', showLocations);
+searchInput.addEventListener('keyup', showLocations);
 </script>
 </body>
 </html>
